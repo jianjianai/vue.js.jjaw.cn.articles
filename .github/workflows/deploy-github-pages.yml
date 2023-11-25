@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout - 迁出文件
         uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
       - name: Setup Nodejs 初始化nodejs
         uses: actions/setup-node@v4.0.0
         with:
