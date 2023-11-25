@@ -39,17 +39,17 @@ const commitMax = computed(() => {
     return undefined;
   }
 });
-//总提交次数
-const countCommis = computed(() => {
-  if (!git.value || !git.value.contributors) {
-    return 1;
-  }
-  let count = 0;
-  for (const c of git.value.contributors) {
-    count += c.commits;
-  }
-  return count;
-})
+// //总提交次数
+// const countCommis = computed(() => {
+//   if (!git.value || !git.value.contributors) {
+//     return 1;
+//   }
+//   let count = 0;
+//   for (const c of git.value.contributors) {
+//     count += c.commits;
+//   }
+//   return count;
+// })
 
 //目录和描点偏移
 const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
@@ -87,8 +87,9 @@ onMounted(() => {
         <!-- 文章信息 -->
         <div class="article-title">
           <!-- 最多提交者 -->
-          <div><span class="article-author">{{ commitMax?.name || "unknown" }}</span> {{tiemF(git.createdTime||0)}} 发布</div>
-          <div>最后更新 {{tiemF(git.updatedTime||0)}} , 共 {{ countCommis }} 次提交</div>
+          <div><span class="article-author">{{ commitMax?.name || "unknown" }}</span> <span
+              class="article-create">{{ tiemF(git.createdTime || 0) }}</span></div>
+          <div>最后更新 {{ tiemF(git.updatedTime || 0) }}</div>
         </div>
         <!-- 文章 -->
         <article>
@@ -195,9 +196,10 @@ li.h6 {
 }
 
 /* 文章 */
-.article-author{
+.article-author {
   font-weight: bolder;
 }
+
 .title {
   font-size: 1.7rem;
   font-weight: bolder;
@@ -293,6 +295,12 @@ li.h6 {
 
   .heard {
     border-bottom: 0.1rem solid var(--border-color);
+  }
+}
+
+@media (max-width: 600px) {
+  .article-create {
+    display: none;
   }
 }
 </style>
