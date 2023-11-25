@@ -1,7 +1,12 @@
 import { type ThemeObject, defineUserConfig, type App, createPage } from 'vuepress'
 import { prismjsPlugin as prismjsPluginSet } from '@vuepress/plugin-prismjs'
+import { sitemapPlugin as sitemapPluginSet  } from "vuepress-plugin-sitemap2";
 
 const prismjsPlugin = prismjsPluginSet();
+const sitemapPlugin = sitemapPluginSet({
+  hostname:"jjaw.cn",
+  changefreq:"weekly"
+});
 
 const theme:ThemeObject = {
     name: 'jjaw-cn-page-theme',
@@ -17,7 +22,7 @@ export default defineUserConfig({
   pagePatterns:[
     "./articles/**/*.md"
   ],
-  plugins:[prismjsPlugin],
+  plugins:[prismjsPlugin,sitemapPlugin],
   async onInitialized(app:App){
     app.pages.push(await createPage(app,{path:"/",frontmatter:{layout:"HomePage"}}));
   }
