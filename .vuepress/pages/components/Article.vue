@@ -130,6 +130,7 @@ onMounted(() => {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-bottom: 0.5rem;
 }
 
 li.h1 {
@@ -138,6 +139,7 @@ li.h1 {
   margin-left: 0rem;
   border-bottom: 0.1rem solid var(--border-color);
   list-style: none;
+  padding-bottom: 0.5rem;
 }
 
 li.h2 {
