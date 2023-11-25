@@ -1,4 +1,7 @@
 import { type ThemeObject, defineUserConfig, type App, createPage } from 'vuepress'
+import { prismjsPlugin as prismjsPluginSet } from '@vuepress/plugin-prismjs'
+
+const prismjsPlugin = prismjsPluginSet();
 
 const theme:ThemeObject = {
     name: 'jjaw-cn-page-theme',
@@ -14,6 +17,7 @@ export default defineUserConfig({
   pagePatterns:[
     "./articles/**/*.md"
   ],
+  plugins:[prismjsPlugin],
   async onInitialized(app:App){
     app.pages.push(await createPage(app,{path:"/",frontmatter:{layout:"HomePage"}}));
   }

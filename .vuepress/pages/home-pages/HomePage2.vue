@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="page2-time">
-            <a href="./edit.html">
+            <a href="./editor.html">
                 <h4>小破站makerdown编辑器</h4>
                 <p>
                     基于Editor.md的Makerdown编辑器，
