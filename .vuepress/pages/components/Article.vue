@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import 'github-markdown-css'
 import { usePageFrontmatter } from "@vuepress/client"
-import { type Ref, ref } from "vue";
+import { type Ref, ref, onMounted } from "vue";
 
 const props = defineProps<{
   topHeight?: number,//导航栏高度，用于文章内容导航浮动高度
@@ -10,7 +10,26 @@ const props = defineProps<{
 
 const frontmatter = usePageFrontmatter();
 
+//目录和描点偏移
 const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
+onMounted(()=>{
+  const rs:{h: string, id: string }[] = [];
+  const els = document.querySelectorAll("h1>a.header-anchor,h2>a.header-anchor,h3>a.header-anchor,h4>a.header-anchor,h5>a.header-anchor,h6>a.header-anchor");
+  for(const el of els){
+    if(!el.parentElement){
+      continue;
+    }
+    const tagName = el.parentElement.tagName;
+    const id = el.parentElement.id;
+    if(!tagName || !id){
+      continue;
+    }
+    el.id = id;
+    el.parentElement.id = '';
+    rs.push({h:tagName.toLowerCase(),id:id});
+  }
+  navFilter.value = rs;
+});
 
 
 </script>
@@ -32,7 +51,7 @@ const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
         <nav>
           <ul>
             <li v-for="{ id, h } of navFilter" :class="h">
-              <NuxtLink :to="`#${id}`">{{ id }}</NuxtLink>
+              <RouterLink :to="`#${id}`">{{ id }}</RouterLink>
             </li>
           </ul>
         </nav>
@@ -54,9 +73,14 @@ const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
 .nav-body ul li a:hover {
   color: var(--color-time1);
 }
+.nav-body ul li{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
 li.h1 {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: bolder;
   margin-left: 0rem;
   border-bottom: 0.1rem solid var(--border-color);
@@ -64,13 +88,13 @@ li.h1 {
 }
 
 li.h2 {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bolder;
   margin-left: 1rem;
 }
 
 li.h3 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: normal;
   margin-left: 1.5rem;
 }
@@ -167,13 +191,12 @@ article,
 
 @media (max-width: 1100px) {
   .nav-div {
-    width: 100%;
-    flex: 1;
+    width: 23%;
   }
 
   .arite {
     width: 100%;
-    flex: 3;
+    flex: 1;
   }
 }
 
