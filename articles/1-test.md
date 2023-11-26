@@ -3,6 +3,8 @@ title: 测试页面
 description: 测试，测试，测试，测试
 date: 2021-01-03
 permalinkPattern: test/
+tag: ["测试"]
+# star: true
 ---
 
 # 测试啊

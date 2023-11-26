@@ -13,9 +13,12 @@
     "@vuepress/plugin-git": "^2.0.0-rc.0",
     "@vuepress/plugin-prismjs": "^2.0.0-rc.0",
     "vuepress": "^2.0.0-rc.0",
+    "vuepress-plugin-blog2": "^2.0.0-rc.0",
+    "vuepress-plugin-seo2": "^2.0.0-rc.0",
     "vuepress-plugin-sitemap2": "^2.0.0-rc.0"
   },
   "dependencies": {
+    "@giscus/vue": "^2.3.0",
     "github-markdown-css": "^5.4.0"
   }
 }

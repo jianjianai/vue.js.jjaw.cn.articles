@@ -1,8 +1,11 @@
 <!-- 用于显示文章的组件 -->
 <script lang="ts" setup>
 import 'github-markdown-css'
-import { usePageData, usePageFrontmatter } from "@vuepress/client"
-import { type Ref, ref, onMounted, computed } from "vue";
+import { usePageFrontmatter } from "@vuepress/client"
+import { type Ref, ref, onMounted, toRefs } from "vue";
+import { dateFormat } from '../composables/Time';
+import { useGitArticleInformations } from '../composables/ArticleInformations';
+import Comment from './Comment.vue';
 
 const props = defineProps<{
   topHeight?: number,//导航栏高度，用于文章内容导航浮动高度
@@ -10,47 +13,14 @@ const props = defineProps<{
 
 const frontmatter = usePageFrontmatter();
 
+//-------------------------------------------------------------------------------
 //文章信息
-const pageData = usePageData();
-const git: Ref<{
-  createdTime?: number,
-  updatedTime?: number,
-  contributors?: {
-    name: string
-    email: string
-    commits: number
-  }[],
-}> = computed(() => pageData.value['git']);
-const tiemF = (tiem: number) => {
-  const date = new Date(tiem);
-  const Y = date.getFullYear();
-  const M = date.getMonth() + 1;
-  const D = date.getDate();
-  const h = date.getHours();
-  const m = date.getMinutes();
-  const s = date.getSeconds();
-  return `${Y}-${M}-${D} ${h}:${m}`;
-}
-//提交最多的人
-const commitMax = computed(() => {
-  if (git.value && git.value.contributors && git.value.contributors.length > 0) {
-    return git.value.contributors.sort((a, b) => b.commits - a.commits)[0];
-  } else {
-    return undefined;
-  }
-});
-// //总提交次数
-// const countCommis = computed(() => {
-//   if (!git.value || !git.value.contributors) {
-//     return 1;
-//   }
-//   let count = 0;
-//   for (const c of git.value.contributors) {
-//     count += c.commits;
-//   }
-//   return count;
-// })
+const tiemF = (tiem: number) => dateFormat(new Date(tiem), (Y, M, D, h, m) => `${Y}-${M}-${D} ${h}:${m}`);
+const { commitMaxPerson, createdTime, updatedTime } = useGitArticleInformations();
 
+
+
+//-------------------------------------------------------------------------------
 //目录和描点偏移
 const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
 onMounted(() => {
@@ -86,16 +56,24 @@ onMounted(() => {
       <div class="article">
         <!-- 文章信息 -->
         <div class="article-title">
-          <!-- 最多提交者 -->
-          <div><span class="article-author">{{ commitMax?.name || "unknown" }}</span> <span
-              class="article-create">{{ tiemF(git.createdTime || 0) }}</span></div>
-          <div>最后更新 {{ tiemF(git.updatedTime || 0) }}</div>
+          <!-- 最多提交者和发布日期 -->
+          <div>
+            <span class="article-author" v-if="commitMaxPerson">{{ commitMaxPerson.name }}</span>
+            <span class="article-create" v-if="createdTime">{{ tiemF(createdTime) }}</span>
+          </div>
+          <!-- 最后更新时间 -->
+          <div>
+            <span v-if="updatedTime">最后更新 {{ tiemF(updatedTime) }}</span>
+          </div>
         </div>
         <!-- 文章 -->
         <article>
           <Content class="markdown-body" />
         </article>
       </div>
+
+      <!-- 评论区 -->
+      <Comment></Comment>
     </div>
     <div class="nav-div">
       <!-- 目录 -->
@@ -113,6 +91,7 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
+
 /* 文章内容导航 */
 .nav-body nav {
   padding: 1rem;
@@ -196,8 +175,10 @@ li.h6 {
 }
 
 /* 文章 */
+
 .article-author {
   font-weight: bolder;
+  padding-right: 0.5rem;
 }
 
 .title {
@@ -231,7 +212,7 @@ li.h6 {
 }
 
 .heard,
-.article {
+.article{
   /* background-color: var(--background-color); */
   margin-top: 1rem;
   overflow: hidden;
