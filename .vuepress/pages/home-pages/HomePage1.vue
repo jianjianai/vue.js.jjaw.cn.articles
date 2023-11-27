@@ -1,35 +1,37 @@
 <script setup>
-import {onMounted ,ref} from "vue";
+import { onMounted, ref } from "vue";
 // 背景图片懒加载
 const isonMounted = ref(false)
-onMounted(()=>{
+onMounted(() => {
     isonMounted.value = true;
 });
 </script>
 <!-- 首页板块 -->
 <template>
     <div class="page-background">
-        <div class="page" :class="{'background-image':isonMounted}">
-            <div class="mengmain">
-                <div class="title">
-                    <h1>神奇小破站</h1>
-                    <h2>分享有意思的东西</h2>
-                    <div class="p">
-                        <div class="shwoWorld">
-                            <div class="line"></div>
+        <div :class="{ 'background-image': isonMounted }">
+            <div class="page">
+                <div class="mengmain">
+                    <div class="title">
+                        <h1>神奇小破站</h1>
+                        <h2>分享有意思的东西</h2>
+                        <div class="p">
+                            <div class="shwoWorld">
+                                <div class="line"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="editing">
-                    <img class="editingtop" src="../../assets/imgs/home-edit.png" />
-                    <div class="editinging">
-                        <p># 神奇小破站</p>
-                        <p>## 分享有意思的东西</p>
-                        <p>
-                        <div class="shwoWorld">
-                            <div class="line"></div>
+                    <div class="editing">
+                        <img class="editingtop" src="../../assets/imgs/home-edit.png" />
+                        <div class="editinging">
+                            <p># 神奇小破站</p>
+                            <p>## 分享有意思的东西</p>
+                            <p>
+                            <div class="shwoWorld">
+                                <div class="line"></div>
+                            </div>
+                            </p>
                         </div>
-                        </p>
                     </div>
                 </div>
             </div>
@@ -47,6 +49,13 @@ onMounted(()=>{
     padding-right: 1rem;
     padding-bottom: 1rem;
     color: rgb(255 206 0);
+    text-shadow: 0rem 0rem 0.2rem #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    .title {
+        color: rgb(255 206 0);
+    }
 }
 
 .title,
@@ -146,13 +155,21 @@ onMounted(()=>{
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: nowrap;
-    background-attachment: fixed;
-    background-position: center center;
-    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.05);
 }
+
+@media (prefers-color-scheme: dark) {
+    .page {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
 
 .background-image {
     /* 背景图片 */
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
     background-image: url(/imgs/home-background.jpg);
 }
 
