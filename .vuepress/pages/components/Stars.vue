@@ -29,7 +29,7 @@ const times = computed(() => {
         </div>
     </div>
     <div v-else>
-        没有用任何收藏页
+        没有任何收藏页
     </div>
 </template>
 <style scoped>
