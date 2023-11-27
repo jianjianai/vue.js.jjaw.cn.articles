@@ -1,7 +1,15 @@
+<script setup>
+import {onMounted ,ref} from "vue";
+// 背景图片懒加载
+const isonMounted = ref(false)
+onMounted(()=>{
+    isonMounted.value = true;
+});
+</script>
 <!-- 首页板块 -->
 <template>
     <div class="page-background">
-        <div class="page">
+        <div class="page" :class="{'background-image':isonMounted}">
             <div class="mengmain">
                 <div class="title">
                     <h1>神奇小破站</h1>
@@ -138,11 +146,14 @@
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: nowrap;
-    /* 背景图片 */
-    background-image: url(/imgs/home-background.jpg);
     background-attachment: fixed;
     background-position: center center;
     background-size: cover;
+}
+
+.background-image {
+    /* 背景图片 */
+    background-image: url(/imgs/home-background.jpg);
 }
 
 .line {
