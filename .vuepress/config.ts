@@ -19,7 +19,7 @@ const usePrismjsPlugin = prismjsPlugin();
 //https://plugin-sitemap2.vuejs.press/zh/config.html
 const useSitemapPlugin = sitemapPlugin({
   hostname,
-  changefreq: "monthly"
+  changefreq: "monthly",
 });
 
 //git信息
