@@ -2,14 +2,14 @@
     <div class="page2">
         <h3 class="page2-title">猜你想看</h3>
         <div class="page2-time">
-            <a href="/2023/11/25/csswriting/">
+            <RouterLink to="/2023/11/25/csswriting/">
                 <h4>首页同款 纯css拼音打字效果</h4>
                 <p>
                     纯css实现拼音打字效果详解。
                     全网最简单,10分钟不到秒懂!
                     任意字符排列排列组合。
                 </p>
-            </a>
+            </RouterLink>
         </div>
         <div class="page2-time">
             <a href="./editor.html">
