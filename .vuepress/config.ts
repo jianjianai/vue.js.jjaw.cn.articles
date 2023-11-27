@@ -49,7 +49,8 @@ const useSeoPlugin = seoPlugin({
 const useHomePagePlugin = homePagePlugin({
   path: "/",
   frontmatter: {
-    layout: "HomePage"
+    layout: "HomePage",
+    description:"分享有意思的东西！java web 前端 网络 vue JavaScript JS TS TypeScript css H5"
   }
 });
 

@@ -85,13 +85,14 @@ if (props.isAutoHide) {
 <template>
   <header id="page-header" :class="{ top: isTop }">
     <div class="show">
-      <div class="left">
+      <RouterLink class="left" to="/">
         <img src="../../assets/imgs/logo.png">
         <h3>{{ siteData.title }}</h3>
-      </div>
+      </RouterLink>
       <div class="rigth">
         <ul class="nav-ul">
-          <!-- <li>主页</li> -->
+          <li><RouterLink to="/star/" class="nav-link">精选</RouterLink></li>
+          <li><RouterLink to="/tag/" class="nav-link">标签</RouterLink></li>
         </ul>
       </div>
     </div>
@@ -107,6 +108,11 @@ if (props.isAutoHide) {
 .rigth ul li {
   list-style: none;
 }
+.nav-link{
+  text-decoration: none;
+  color: var(--color);
+  font-weight: bolder;
+}
 
 .rigth li {
   margin-left: 0.5rem;
@@ -120,6 +126,7 @@ if (props.isAutoHide) {
 
 /* logo */
 .left {
+  text-decoration: none;
   display: flex;
   color: var(--color-logo);
 }

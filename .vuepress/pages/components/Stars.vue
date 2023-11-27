@@ -5,18 +5,23 @@ import { useBlogType } from "vuepress-plugin-blog2/client";
 import { type MyBlogInfo } from "../types"
 import { dateFormat } from "../composables/Time";
 
+const props = defineProps<{title?:string}>();
 const tiemF = (tiem: number) => dateFormat(new Date(tiem), (Y, M, D, h, m) => `${Y}-${M}-${D} ${h}:${m}`);
 const stars = useBlogType("star");
 const times = computed(() => {
     if (!stars.value || !stars.value.items) {
         return undefined;
     }
-    return stars.value.items.map((t) => t.info) as MyBlogInfo[];
+    return (stars.value.items.map((t) => t.info) as MyBlogInfo[]).sort((a,b)=>{
+        //从最新到最老排序
+        return (b.git?.updatedTime || 0) - (a.git?.updatedTime || 0);
+    });
 })
 
 </script>
 <template>
     <div v-if="times" class="stars">
+        <h3 class="title" v-if="props.title">{{ props.title }}</h3>
         <div v-for="{ git, title, key, description } in times" class="time">
             <RouterLink :to="{name:key}">
                 <h4>{{ title }}</h4>
@@ -33,6 +38,11 @@ const times = computed(() => {
     </div>
 </template>
 <style scoped>
+.title {
+    text-align: center;
+    width: 100%;
+    font-size: 2rem;
+}
 .tiem-person{
     margin-bottom: 0.4rem;
     font-size: 0.9rem;
