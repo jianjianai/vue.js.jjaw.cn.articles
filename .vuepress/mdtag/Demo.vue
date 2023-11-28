@@ -18,9 +18,10 @@ const props = defineProps<{
     font-size: 1rem;
     font-weight: bolder;
     background-color: var(--background-color1);
+    margin: 0;
 }
 .demo-body{
-    padding: 22px 24px;
+    padding: 1rem;
 }
 .demo{
     border-radius: 8px;
