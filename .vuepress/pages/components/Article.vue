@@ -22,9 +22,9 @@ const { commitMaxPerson, createdTime, updatedTime } = useGitArticleInformations(
 
 //-------------------------------------------------------------------------------
 //目录和描点偏移
-const navFilter: Ref<{ h: string, id: string }[]> = ref([]);
+const navFilter: Ref<{ h: string, id: string,name:string }[]> = ref([]);
 onMounted(() => {
-  const rs: { h: string, id: string }[] = [];
+  const rs: { h: string, id: string ,name:string }[] = [];
   const els = document.querySelectorAll("h1>a.header-anchor,h2>a.header-anchor,h3>a.header-anchor,h4>a.header-anchor,h5>a.header-anchor,h6>a.header-anchor");
   for (const el of els) {
     if (!el.parentElement) {
@@ -35,9 +35,9 @@ onMounted(() => {
     if (!tagName || !id) {
       continue;
     }
-    el.id = id;
-    el.parentElement.id = '';
-    rs.push({ h: tagName.toLowerCase(), id: id });
+    const newId= id+"#";
+    el.id = newId;
+    rs.push({ h: tagName.toLowerCase(), id: newId , name:id });
   }
   navFilter.value = rs;
 });
@@ -81,8 +81,8 @@ onMounted(() => {
         <div class="nav-title">目录</div>
         <nav>
           <ul>
-            <li v-for="{ id, h } of navFilter" :class="h">
-              <RouterLink :to="`#${id}`">{{ id }}</RouterLink>
+            <li v-for="{ id, h, name } of navFilter" :class="h">
+              <RouterLink :to="`#${id}`">{{ name }}</RouterLink>
             </li>
           </ul>
         </nav>
