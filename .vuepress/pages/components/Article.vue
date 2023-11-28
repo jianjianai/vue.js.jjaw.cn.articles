@@ -95,6 +95,8 @@ onMounted(() => {
 /* 文章内容导航 */
 .nav-body nav {
   padding: 1rem;
+  max-height: calc(100vh - 6.6rem - v-bind("`${props.topHeight}px`"));
+  overflow-y: auto;
 }
 
 .nav-body ul li a {
@@ -151,6 +153,7 @@ li.h6 {
 
 
 .nav-title {
+  height: 1.6rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: 1.2rem;
